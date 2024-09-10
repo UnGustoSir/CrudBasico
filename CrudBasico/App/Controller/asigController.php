@@ -61,7 +61,7 @@ class asigController{
             if($consulta){
                 ?><script>Modal('ModalAsig_ok');
                 setTimeout(function() {
-                    window.location.href = '../CrudBasico?typeControl=asig&a=vistaAsig&user='<?php echo $Globaluser ?>;
+                    window.location.href = '../CrudBasico?typeControl=asig&a=vistaAsig&user=<?php echo $Globaluser ?>';
                     }, 2000);
                 </script><?php
             }else{
