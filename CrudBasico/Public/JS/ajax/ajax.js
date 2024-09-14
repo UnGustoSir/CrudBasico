@@ -19,6 +19,7 @@ const ajaxDelete = (data, link) =>{
                         Modal('Modal_Ok');
                     break;
                 }
+
             }else if(respJSON.status=='ERROR'){
                 switch(respJSON.alerta){
                     
@@ -49,7 +50,6 @@ const ajaxForm = (data, link) =>{
         contentType: false, 
         processData: false,
         success: function(resp){
-            console.log(resp);
             let respJSON = JSON.parse(resp);
             if(respJSON.status=='Finalizado'){
                 //

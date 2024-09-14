@@ -50,8 +50,9 @@ class employ{
     public function modifEmpleado($idEmpleado, $name, $lastname, $dni, $puesto, $fechaActulizacion){
         try{
             $consulta = $this->pdo->query('UPDATE `empleados` SET nombre="'.$name.'", apellidos="'.$lastname.'", dni="'.$dni.'", puesto="'.$puesto.'", fechaCambio="'.$fechaActulizacion.'" WHERE idEmpleado='.$idEmpleado);
+            return $consulta;
         }catch(PDOException $e){
-            echo 'Hubo un error en la consulta: '.$e;
+            return false;
         }
         
     }

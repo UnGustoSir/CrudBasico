@@ -1,18 +1,11 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <link href="../CrudBasico/Public/css/style.css" rel="stylesheet">
+<?php include('../CrudBasico/View/Extra/header.php')?>
 
     <title>Gestionar Asignaciones</title>
 </head>
 <body>
     <div class="wrapper">
     <?php include('../CrudBasico/View/Extra/sidebard.php')?>
-
+    <div id="mostrar"></div>
 
 
         <!-- Main Content -->
@@ -48,8 +41,8 @@
                                         echo '<td>'.$result['empleadoAsignado'].'</td>';
 
                                         echo '<td class="d-flex justify-content-center gap-2">
-                                            <a href="../CrudBasico?typeControl=asig&a=deleteAsig&idAsig='.$result['idAsig'].'&user='.$user.'" class="btn btn-danger btn-sm">Eliminar</a>
-                                            <a href="../CrudBasico?typeControl=asig&a=modifAsig&idAsig='.$result['idAsig'].'&user='.$user.'" class="btn btn-warning btn-sm">Modificar</a>
+                                            <a action="deleteAsig" tControl="asig" idElem="'.$result['idAsig'].'"  class="btn btn-danger btn-sm deleteBtn">Eliminar</a>
+                                            <a href="../CrudBasico?typeControl=asig&a=vistaUpdate&idAsig='.$result['idAsig'].'" class="btn btn-warning btn-sm">Modificar</a>
                                         </td>';
                                     echo '</tr>';
                                 }
@@ -60,11 +53,14 @@
 
                 <!-- Botones para acciones -->
                 <div class="mt-4">
-                    <a href="../CrudBasico?typeControl=asig&a=insertAsig&user=<?php echo $user?>" class="btn btn-success">Insertar Asignación</a>
-                    <a href="../CrudBasico" class="btn btn-danger">Salir</a>
+                    <a href="../CrudBasico?typeControl=asig&a=vistaInsert" class="btn btn-success">Insertar Asignación</a>
+                    <a href="../CrudBasico?typeControl=asig&a=logout" class="btn btn-danger">Salir</a>
                 </div>
             </div>
         </div>
     </div>
+
+    <?php include('../CrudBasico/View/Extra/scripts.php')?>
+
 </body>
 </html>

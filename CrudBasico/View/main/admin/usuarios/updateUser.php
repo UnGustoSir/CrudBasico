@@ -1,12 +1,4 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script src="../CrudBasico/Public/JS/Modal.js"></script>
-
+<?php include('../CrudBasico/View/Extra/header.php')?>
     <title>Actualización de Usuario</title>
 </head>
 <body class="d-flex justify-content-center align-items-center bg-light" style="min-height: 100vh;">
@@ -15,13 +7,19 @@
         <h1 class="mb-4">Actualización de usuario</h1>
 
         <!-- Alertas -->
-        <div class="alert alert-success" role="alert" id="ModalAcc_ok" hidden>Modificación exitosa</div>
-        <div class="alert alert-danger" role="alert" id="ModalAcc_err" hidden>Error al modificar la cuenta</div>
-        <div class="alert alert-warning" role="alert" id="ModalAcc_ex" hidden>El usuario/correo ya existe</div>
-        <div class="alert alert-warning" role="alert" id="MUpdUser_rell" hidden>No puedes enviar información vacía</div>
+        <div class="alert alert-success" role="alert" id="Modal_Ok" hidden>Modificación exitosa</div>
+        <div class="alert alert-danger" role="alert" id="Modal_err" hidden>Error al modificar la cuenta</div>
+        <div class="alert alert-warning" role="alert" id="Modal_exist" hidden>El usuario/correo ya existe</div>
+        <div class="alert alert-warning" role="alert" id="Modal_empty" hidden>No puedes enviar información vacía</div>
 
         <!-- Formulario de actualización de usuario -->
-        <form action="" method="POST">
+        <form id="formAsig" tControl="usuarios" action="modifUser">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="idUser" class="form-label">idUser</label>
+                    <input type="text" name="idUser" class="form-control" value="<?php echo $idUser?>" readonly>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="nombre" class="form-label">Nombre</label>
@@ -69,10 +67,10 @@
 
 
             <!-- Botones de acción -->
-            <button type="submit" class="btn btn-primary w-100 mb-2">Enviar datos</button>
-            <a href="../CrudBasico?typeControl=usuarios&a=vistaUsers&user=<?php echo $Globaluser?>" class="btn btn-secondary w-100 text-white text-decoration-none text-center">Volver</a>
+            <button type="submit" id="submitForm" class="btn btn-primary w-100 mb-2">Enviar datos</button>
+            <a href="../CrudBasico?typeControl=usuarios&a=vistaUsers" class="btn btn-secondary w-100 text-white text-decoration-none text-center">Volver</a>
         </form>
     </div>
-
+    <?php include('../CrudBasico/View/Extra/scripts.php')?>
 </body>
 </html>

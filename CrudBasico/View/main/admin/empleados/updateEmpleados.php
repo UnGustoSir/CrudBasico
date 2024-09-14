@@ -1,11 +1,4 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script src="../CrudBasico/Public/JS/Modal.js"></script>
+<?php include('../CrudBasico/View/Extra/header.php'); ?>
 
     <title>Actualización de Empleado</title>
 </head>
@@ -15,11 +8,20 @@
         <h1 class="mb-4">Actualización de empleado</h1>
 
         <!-- Alertas -->
-        <div class="alert alert-warning" role="alert" id="MUpdEmploy_dni" hidden>Este DNI ya está registrado</div>
-        <div class="alert alert-success" role="alert" id="MUpdEmploy_ok" hidden>Empleado modificado con éxito</div>
+
+        <div class="alert alert-success" role="alert" id="Modal_Ok" hidden>Empleado modificado con éxito</div>
+        <div class="alert alert-danger" role="alert" id="Modal_err" hidden>Error al modificar el empleado</div>
+        <div class="alert alert-warning" role="alert" id="Modal_empty" hidden>No puedes enviar información vacía</div>
+
+        <div class="alert alert-warning" role="alert" id="Modal_exist" hidden>Este DNI ya está registrado</div>
 
         <!-- Formulario de actualización -->
-        <form action="" method="POST">
+        <form id="formAsig" action="modifEmpleado" tControl="empleado">
+            <div class="mb-3">
+                <label for="idEmpleado" class="form-label">Id</label>
+                <input type="text" name="idEmpleado" class="form-control" value="<?php echo $idEmpleado?>" readonly>
+            </div>
+        
             <div class="mb-3">
                 <label for="nom_form" class="form-label">Nombre</label>
                 <input type="text" name="nom_form" class="form-control" value="<?php echo $empleado['nombre']?>" required>
@@ -38,10 +40,11 @@
             </div>
 
             <!-- Botones de acción -->
-            <button type="submit" class="btn btn-primary w-100 mb-2">Enviar datos</button>
-            <a href="../CrudBasico?typeControl=empleado&user=<?php echo $user?>" class="btn btn-secondary w-100 text-white text-decoration-none">Volver</a>
+            <button id ="submitForm" type="submit" class="btn btn-primary w-100 mb-2">Enviar datos</button>
+            <a href="../CrudBasico?typeControl=empleado&a=vistaEmploy" class="btn btn-secondary w-100 text-white text-decoration-none">Volver</a>
         </form>
     </div>
+    <?php include('../CrudBasico/View/Extra/scripts.php'); ?>
 
 </body>
 </html>

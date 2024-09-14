@@ -22,8 +22,10 @@ const AlertDelete = (data, link) =>{
                 title: "¡Se realizaron los cambios!",
                 showConfirmButton: false,
                 timer: 1500
+              }).then(()=>{
+                location.reload();
               });
-    
+
         }
     
         const AlertErr = () =>{

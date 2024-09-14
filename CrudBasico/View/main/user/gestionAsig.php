@@ -1,12 +1,4 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <link href="../CrudBasico/Public/css/style.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<?php include('../CrudBasico/View/Extra/header.php')?>
 
     <title>Gestión de Asignaciones</title>
 </head>
@@ -18,7 +10,7 @@
             <ul class="nav flex-column">
                 
                 <li class="nav-item">
-                        <i class="bi bi-people-fill">Bienvenido <?php echo $arrayUser['nombre'].' '.$arrayUser['apellidos'];?></i> 
+                        <i class="bi bi-people-fill">Bienvenido <?php echo $datos['nombre'].' '.$datos['apellidos'];?></i> 
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="">
@@ -66,10 +58,12 @@
 
                 <!-- Botón de salir -->
                 <div class="mt-4">
-                    <a href="../CrudBasico" class="btn btn-danger w-25 text-white text-decoration-none">Salir</a>
+                    <a href="../CrudBasico?typeControl=user&a=logout" class="btn btn-danger w-25 text-white text-decoration-none">Salir</a>
                 </div>
             </div>
         </div>
     </div>
+    <?php include('../CrudBasico/View/Extra/scripts.php')?>
+
 </body>
 </html>

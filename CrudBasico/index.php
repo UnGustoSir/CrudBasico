@@ -3,6 +3,8 @@ include('../CrudBasico/App/Models/database/conexion.php');
 include('../CrudBasico/App/Models/usersModel.php');
 include('../CrudBasico/App/Models/employModel.php');
 include('../CrudBasico/App/Models/asigModel.php');
+include('../CrudBasico/App/Controller/sessionController.php');
+
 
     if(!isset($_GET['typeControl'])){
         include('../CrudBasico/App/Controller/loginController.php');

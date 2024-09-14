@@ -6,37 +6,47 @@ class usuariosController{
     private $usersModel;
     private $loginController;
     private $asigModel;
+    private $sessionController;
 
     public function __construct(){
         $this->employModel = new employ();
         $this->usersModel = new users();
         $this->loginController = new LoginController();
         $this->asigModel = new usuario();
+        $this->sessionController = new sessionController();
+
     }
     
-//Tabla usuarios
-    public function vistaUsers(){
-        $arrayUsers = $this->usersModel->getAllUsers();
-        if(isset($_GET['user'])){
-            $user = $_GET['user'];
-            $datosUser = $this->usersModel->getOneUser($user);
-            include('../CrudBasico/View/main/admin/usuarios/gestionUsers.php');
-
-        }
+    public function logout(){
+        $this->sessionController->logout();
     }
 
+//Tabla usuarios
+    public function vistaUsers(){
+        $datos = $this->sessionController->verify();
+        if($datos['privilegios']== 'admin'){
+            $arrayUsers = $this->usersModel->getAllUsers();
+            include('../CrudBasico/View/main/admin/usuarios/gestionUsers.php');
+        }else{
+            $this->sessionController->logout();
+        }
+
+    }
+
+    public function vistaModif(){
+        $datos = $this->sessionController->verify();
+        if($datos['privilegios']== 'admin'){
+            $idUser = $_GET['idUser'];
+            $usuario = $this->usersModel->getUserbyId($idUser);
+            include('../CrudBasico/View/main/admin/usuarios/updateUser.php');
+        }else{
+            $this->sessionController->logout();
+        }
+
+    }
         public function modifUser(){
-                if(isset($_GET['idUser'])){
-                    $Globaluser = $_GET['user'];
-                    $idUser = $_GET['idUser'];
-                    $usuario = $this->usersModel->getUserbyId($idUser);
-                    include('../CrudBasico/View/main/admin/usuarios/updateUser.php');
-
-                }
-
-                if($_POST && isset($_POST)){
-                    if(!empty($_POST['nombre']) && !empty($_POST['apellidos']) && !empty($_POST['usuario']) && !empty($_POST['pass']) && !empty($_POST['correo'])){
-                        $idUser = $_GET['idUser'];
+                if($_POST){
+                        $idUser = $_POST['idUser'];
                         $nomUpd = $_POST['nombre'];
                         $lastUpd = $_POST['apellidos'];
                         $user = $_POST['usuario'];
@@ -45,60 +55,125 @@ class usuariosController{
                         $status = $_POST['status'];
                         $privilege = $_POST['privilege'];
 
+                        $response = [];
                     $existUserNoid = $this->usersModel->getOneUserNoId($user, $idUser);
                     $existUserbyEmailNoid = $this->usersModel->getOneUserbyEmailNoId($user, $idUser);
                         if(($existUserNoid) || ($existUserbyEmailNoid)){
-                            ?><script>Modal('ModalAcc_ex')</script><?php
+                            $response =[
+                                'status' => 'ERROR',
+                                'alerta' => 'Modal_exist'
+                            ];
                         }else{
                             $fechaUpd = $this->fecha();
                             $update = $this->usersModel->modifUser($idUser, $nomUpd, $lastUpd, $user, $pass, $email, $fechaUpd, $status, $privilege);
                             if($update){
-                                ?><script>Modal('ModalAcc_ok')
-                                setTimeout(function() {
-                                window.location.href = '../CrudBasico?typeControl=usuarios&a=modifUser&idUser=<?php echo $idUser; ?>&user=<?php echo $Globaluser?>';
-                                }, 2000);
-                                </script><?php
+                                $response =[
+                                    'status' => 'Finalizado',
+                                    'alerta' => 'Modal_Ok'
+                                ];
                             }else{                                
-                                ?><script>Modal('ModalAcc_err')</script><?php
+                                $response =[
+                                    'status' => 'ERROR',
+                                    'alerta' => 'Modal_err'
+                                ];
                             }
+
+                            
                         } 
-                    }else{
-                        ?><script>Modal('MUpdUser_rell')</script><?php    
-                    }
+                        echo json_encode($response);
                 }
         }
 
 
 
     public function deleteUser(){
-            if(isset($_GET['idUser'])){
-                //Faltan validaciones para saber si se a borrado
-                $Globaluser = $_GET['user'];
 
-                $idUser = $_GET['idUser'];
+            if($_POST){
+                $response = [];
+                $idUser = $_POST['idElem'];
                 $user = $this->usersModel->getUserbyId($idUser);
                 if($user){
                     $idEmpleado = $user['idEmpleado'];
-                    $this->employModel->deleteEmpleado($idEmpleado);
-                    $this->usersModel->deleteUser($idUser);
+                    $delEmp = $this->employModel->deleteEmpleado($idEmpleado);
+                    $delUser = $this->usersModel->deleteUser($idUser);
+                    if($delEmp && $delUser){
+                        $response = [
+                            'status' => 'Finalizado',
+                            'alerta' => 'AlertOk'
+                        ];
+                    }else{
+                        $response = [
+                            'status' => 'ERROR',
+                            'alerta' => 'AlertErr'
+                        ];
+                    }
                 }
                 
-                header('Location: ../CrudBasico?typeControl=usuarios&a=vistaUsers&user='.$Globaluser.'');
+                echo json_encode($response);
             }
         
     }
 
-    public function insertUser(){
-        $Globaluser = $_GET['user'];
-
-        include('../CrudBasico/View/main/admin/usuarios/insertUser.php');
-
-        if($_POST && isset($_POST)){
-
-            $this->loginController->register();
+    public function vistaInsert(){
+        $datos = $this->sessionController->verify();
+        if($datos['privilegios']== 'admin'){
+            include('../CrudBasico/View/main/admin/usuarios/insertUser.php');
+        }else{
+            $this->sessionController->logout();
         }
 
     }
+    public function insertUser(){
+        if($_POST){
+            $name = $_POST['nameRegister'];
+            $lastName = $_POST['lastNameRegister'];
+            $user = $_POST['userRegister'];
+            $email = $_POST['emailRegister'];
+            $pass = $_POST['passRegister'];
+            
+            
+            $existUser = $this->usersModel->getOneUser($user);
+            $existUserbyEmail = $this->usersModel->getOneUserbyEmail($email);
+            
+            $response = [];
+            if(($existUser) || ($existUserbyEmail)){
+                $response = [
+                    'status' => 'ERROR',
+                    'alerta' => 'Modal_exist'
+                ];
+            }else{
+                $star_date = $this->fecha();
+
+                $newEmploy = $this->employModel->insertUser_empleado($name, $lastName, $star_date);
+                
+
+                if($newEmploy){
+                    $lastId = $this->employModel->getLastId();
+                    $newUser = $this->usersModel->insertUser($name, $lastName, $user, $pass, $email, $star_date, $lastId);
+                    if($newUser){
+                        $response = [
+                            'status' => 'Finalizado',
+                            'alerta' => 'Modal_Ok'
+                        ];
+                    }else{
+                        $response = [
+                            'status' => 'ERROR',
+                            'alerta' => 'Modal_err'
+                        ];
+                    }
+                }else{
+                    $response = [
+                        'status' => 'ERROR',
+                        'alerta' => 'Modal_err'
+                    ];
+                }
+            }
+            echo json_encode($response);
+        
+    }
+        }
+
+    
 
     public function fecha(){
         $fecha = new DateTime('now', new DateTimeZone('America/Lima'));

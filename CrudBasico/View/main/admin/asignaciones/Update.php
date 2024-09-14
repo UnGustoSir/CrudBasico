@@ -47,7 +47,7 @@
 
             <!-- Botones de acción -->
             <button type="submit" id="submitForm" class="btn btn-primary w-100 mb-2">Enviar datos</button>
-            <a href="../CrudBasico?typeControl=asig&a=vistaAsig&user=glc123" class="btn btn-secondary w-100 text-white text-decoration-none text-center">Volver</a>
+            <a href="../CrudBasico?typeControl=asig&a=vistaAsig" class="btn btn-secondary w-100 text-white text-decoration-none text-center">Volver</a>
         </form>
 
         <?php include('../CrudBasico/View/Extra/scripts.php')?>

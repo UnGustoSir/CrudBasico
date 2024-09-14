@@ -1,19 +1,11 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <link href="../CrudBasico/Public/css/style.css" rel="stylesheet">
-    <script src="../CrudBasico/Public/JS/Modal.js"></script>
+<?php include('../CrudBasico/View/Extra/header.php'); ?>
     <title>Gestión de Empleados</title>
 </head>
 <body>
     <div class="wrapper">
         <!-- Sidebar -->
-        <?php include('../CrudBasico/View/Extra/sidebard.php')?>
-
+        <?php include('../CrudBasico/View/Extra/sidebard.php');?>
+        
 
         <!-- Main Content -->
         <div class="content">
@@ -50,8 +42,8 @@
                                         echo '<td>'.$result['fechaCreado'].'</td>';
                                         echo '<td>'.$result['fechaCambio'].'</td>';
                                         echo '<td class="d-flex justify-content-center gap-2">';
-                                            echo '<a href="../CrudBasico?typeControl=empleado&a=deleteEmpleado&idEmpleado='.$result['idEmpleado'].'&user='.$user.'" class="btn btn-danger btn-sm">Eliminar</a>';
-                                            echo '<a href="../CrudBasico?typeControl=empleado&a=modifEmpleado&idEmpleado='.$result['idEmpleado'].'&user='.$user.'" class="btn btn-warning btn-sm">Modificar</a>';
+                                            echo '<a action="deleteEmpleado" tControl ="empleado" idElem= "'.$result['idEmpleado'].'" class="btn btn-danger btn-sm deleteBtn">Eliminar</a>';
+                                            echo '<a href="../CrudBasico?typeControl=empleado&a=vistaUpdate&idEmpleado='.$result['idEmpleado'].'" class="btn btn-warning btn-sm">Modificar</a>';
                                         echo '</td>';
                                     echo '</tr>';
                                 }
@@ -61,9 +53,13 @@
                 </div>
 
                 <!-- Botón de salir -->
-                <a href="../CrudBasico" class="btn btn-danger w-25 text-white text-decoration-none">Salir</a>
+                <a href="../CrudBasico?typeControl=empleado&a=logout" class="btn btn-danger w-25 text-white text-decoration-none">Salir</a>
             </div>
         </div>
     </div>
+
+
+    <?php include('../CrudBasico/View/Extra/scripts.php'); ?>
+
 </body>
 </html>

@@ -3,10 +3,14 @@
 class LoginController{
     private $usersModel;
     private $employModel;
+    private $sessionController;
+
     public function __construct()
     {
         $this->employModel = new employ();
         $this->usersModel = new users();
+        $this->sessionController = new sessionController();
+        session_start();
     }
 
     //Login
@@ -18,7 +22,6 @@ class LoginController{
         }
     }
 
-    
     public function verify(){
         if(!empty($_POST['user'] && !empty($_POST['pass']))){
             $usuario = $_POST['user'];
@@ -31,11 +34,15 @@ class LoginController{
                 $userExist = true;
 
                 if($User['privilege']=='user' && $User['status']=='Active'){
+                    $_SESSION['user']= $usuario;
+                    $_SESSION['privilege'] = $User['privilege']; 
+                    header('Location: ../CrudBasico?typeControl=user&a=vistaForUser');
 
-                    header('Location: ../CrudBasico?typeControl=user&a=vistaForUser&user='.$usuario);
                 }elseif($User['privilege']=='admin' && $User['status']=='Active'){
-                    
-                    header('Location: ../CrudBasico?typeControl=empleado&user='.$usuario);
+
+                    $_SESSION['user']= $usuario;
+                    $_SESSION['privilege'] = $User['privilege']; 
+                    header('Location: ../CrudBasico?typeControl=empleado&a=vistaEmploy');
                 }else{
                 ?><script>Modal('ModalAcc_act')</script><?php
                     break;
@@ -46,7 +53,6 @@ class LoginController{
                 break;
             }
         }
-    
             if(!$userExist){
                 ?><script>Modal('ModalLog_NoExis')</script><?php
             }
@@ -116,4 +122,3 @@ class LoginController{
     
     
     }
-

@@ -41,7 +41,7 @@
 
                 <!-- Botones de acción -->
                 <button id="submitAsig" type="submit" class="btn btn-primary w-100 mb-2">Enviar</button>
-                <a href="../CrudBasico?typeControl=asig&a=vistaAsig&user=<?php echo $Globaluser?>" class="btn btn-secondary w-100 text-white text-decoration-none text-center">Volver</a>
+                <a href="../CrudBasico?typeControl=asig&a=vistaAsig" class="btn btn-secondary w-100 text-white text-decoration-none text-center">Volver</a>
             </form>
             
             <?php include('../CrudBasico/View/Extra/scripts.php')?>
